@@ -13,7 +13,7 @@ async def start(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     # Отправка логотипа
-    await update.message.reply_photo(photo=open("data/images/Logo2.png", "rb"))
+    await update.message.reply_photo(photo=open("C:\Users\Я\OneDrive\Documents\My_Repository\bar_nou\cafe_bot\data\images/Logo2.png", "rb"))
 
     # Отправка приветственного сообщения с клавиатурой
     await update.message.reply_text(
