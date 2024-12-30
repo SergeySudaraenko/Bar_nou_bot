@@ -1,71 +1,71 @@
 [
     {
-      "id": 11,
+      "id": 12,
       "name": "Bocadillo de jamón ibérico (Normal)",
-      "price": 5,
+      "price": 2.5,
       "description": "Delicioso bocadillo de jamón ibérico en pan fresco.",
       "image": "butik2.png"
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "Bocadillo de jamón ibérico (Grande)",
-      "price": 6,
+      "price": 4,
       "description": "Delicioso bocadillo de jamón ibérico en tamaño grande.",
       "image": "butik2-2.png"
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "Bocadillo de jamón dulce (Normal)",
-      "price": 4.5,
+      "price": 2.5,
       "description": "Bocadillo clásico de jamón dulce para un almuerzo ligero.",
       "image": "butik4.png"
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "Bocadillo de jamón dulce (Grande)",
-      "price": 5.5,
+      "price": 4,
       "description": "Bocadillo clásico de jamón dulce en tamaño grande.",
       "image": "butik4-2.png"
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "Bocadillo de salami (Normal)",
-      "price": 4.8,
+      "price": 2.5,
       "description": "Bocadillo de salami fresco con un toque tradicional.",
       "image": "butik3.png"
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "Bocadillo de salami (Grande)",
-      "price": 5.8,
+      "price": 4,
       "description": "Bocadillo de salami en tamaño grande, perfecto para compartir.",
       "image": "butik3-2.png"
     },
     {
-      "id": 17,
+      "id": 18,
       "name": "Bocadillo de chorizo (Normal)",
-      "price": 5,
+      "price": 2.5,
       "description": "Bocadillo con el auténtico sabor del chorizo español.",
       "image": "butik1.png"
     },
     {
-      "id": 18,
+      "id": 19,
       "name": "Bocadillo de chorizo (Grande)",
-      "price": 6,
+      "price": 4,
       "description": "Bocadillo grande de chorizo, ideal para los amantes del sabor intenso.",
       "image": "butik1-2.png"
     },
     {
-      "id": 19,
+      "id": 20,
       "name": "Bocadillo de jamón (Normal)",
-      "price": 4.7,
+      "price": 2.5,
       "description": "Un bocadillo sencillo de jamón con pan crujiente.",
       "image": "butik5.png"
     },
     {
-      "id": 20,
+      "id": 21,
       "name": "Bocadillo de jamón (Grande)",
-      "price": 5.7,
+      "price": 4,
       "description": "Un bocadillo de jamón en tamaño grande para un almuerzo completo.",
       "image": "butik5-2.png"
     }

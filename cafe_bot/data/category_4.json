@@ -1,29 +1,29 @@
 [
     {
-      "id": 21,
+      "id": 22,
       "name": "Khinkali",
       "price": 2,
       "description": "Deliciosos dumplings georgianos.Precio por unidad",
       "image": "chinkali.png"
     },
     {
-      "id": 22,
+      "id": 23,
       "name": "Vareniki",
       "price": 1.5,
       "description": "Dumplings tradicionales rellenos de patata o requesón.Precio por unidad",
       "image": "vareniki.png"
     },
     {
-      "id": 23,
+      "id": 24,
       "name": "Khachapuri normal",
-      "price": 8,
+      "price": 6,
       "description": "Un pan con queso fundido típico georgiano.",
       "image": "xachapuri normal.png"
     },
     {
-      "id": 24,
+      "id": 25,
       "name": "Khachapuri grande",
-      "price": 12,
+      "price": 10,
       "description": "Un pan con queso fundido típico georgiano,tamaño grande, perfecto para compartir.",
       "image": "xachapuri larga.png"
     }
