@@ -1,1 +1,1 @@
-web: python bot.py
+web: python cafe_bot/bot.py
