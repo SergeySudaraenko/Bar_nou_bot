@@ -1,5 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
+import os
 
 async def start(update: Update, context: CallbackContext):
     # Клавиатура с кнопками
@@ -13,7 +14,9 @@ async def start(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     # Отправка логотипа
-    await update.message.reply_photo(photo=open("C:\Users\Я\OneDrive\Documents\My_Repository\bar_nou\cafe_bot\data\images/Logo2.png", "rb"))
+    
+    file_path = os.path.join("data", "images", "Logo2.png")
+    await update.message.reply_photo(photo=open(file_path, "rb"))
 
     # Отправка приветственного сообщения с клавиатурой
     await update.message.reply_text(
