@@ -15,7 +15,7 @@ async def start(update: Update, context: CallbackContext):
 
     # Отправка логотипа
     
-    file_path = os.path.join("data", "images", "logo2.png")
+    file_path = os.path.join("data", "images", "logo.png")
     await update.message.reply_photo(photo=open(file_path, "rb"))
 
     # Отправка приветственного сообщения с клавиатурой
