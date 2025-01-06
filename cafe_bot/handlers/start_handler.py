@@ -13,10 +13,11 @@ async def start(update: Update, context: CallbackContext):
     
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    # Отправка логотипа
+    # Использование raw-ссылки на логотип
+    logo_url = "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/images/logo.png"
     
-    file_path = os.path.join("data", "images", "logo.png")
-    await update.message.reply_photo(photo=open(file_path, "rb"))
+    # Отправка логотипа с использованием ссылки
+    await update.message.reply_photo(photo=logo_url)
 
     # Отправка приветственного сообщения с клавиатурой
     await update.message.reply_text(
