@@ -1,1 +1,2 @@
-web: python cafe_bot/bot.py
+worker: python cafe_bot/bot.py
+
