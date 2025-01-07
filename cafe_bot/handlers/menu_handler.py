@@ -46,8 +46,8 @@ async def show_menu(update: Update, context: CallbackContext):
         [InlineKeyboardButton("Bocadillos", callback_data="category_bocadillos")],
         [InlineKeyboardButton("Comida", callback_data="category_comida")],
     ]
-    # Добавляем кнопку для возврата в главное меню
-    keyboard.append([InlineKeyboardButton("Volver al menú principal", callback_data="main_menu")])
+    # Добавляем кнопку "Назад" для возврата в основное меню
+    keyboard.append([InlineKeyboardButton("Volver al menú principal", callback_data="show_menu")])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text("Selecciona una categoría:", reply_markup=reply_markup)
@@ -84,9 +84,6 @@ async def handle_category(update: Update, context: CallbackContext):
     ]
     # Добавляем кнопку "Назад" для возврата в меню
     keyboard.append([InlineKeyboardButton("Volver a categorías", callback_data="show_menu")])
-
-    # Добавляем кнопку для возврата в главное меню
-    keyboard.append([InlineKeyboardButton("Volver al menú principal", callback_data="main_menu")])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text("Selecciona un producto:", reply_markup=reply_markup)
@@ -134,26 +131,9 @@ async def handle_product(update: Update, context: CallbackContext):
             f"⭐ {product['name']} - {product['price']}€\n\n{product['description']}\n\n(Imagen no disponible)"
         )
 
-    # Кнопка для возврата в главное меню
+    # Кнопка для возврата в основное меню
     keyboard = [
-        [InlineKeyboardButton("Volver al menú principal", callback_data="main_menu")]
+        [InlineKeyboardButton("Volver al menú principal", callback_data="show_menu")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.message.reply_text("¿Quieres volver al menú principal?", reply_markup=reply_markup)
-
-async def show_main_menu(update: Update, context: CallbackContext):
-    """Возвращает пользователя в главное меню."""
-    query = update.callback_query
-    await query.answer()
-
-    keyboard = [
-        [InlineKeyboardButton("Café", callback_data="category_cafe")],
-        [InlineKeyboardButton("Cerveza", callback_data="category_cerveza")],
-        [InlineKeyboardButton("Bocadillos", callback_data="category_bocadillos")],
-        [InlineKeyboardButton("Comida", callback_data="category_comida")],
-    ]
-    # Добавляем кнопку для возврата в главное меню
-    keyboard.append([InlineKeyboardButton("Volver al menú principal", callback_data="main_menu")])
-
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.edit_message_text("Selecciona una categoría:", reply_markup=reply_markup)
