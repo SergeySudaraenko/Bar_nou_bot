@@ -1,30 +1,45 @@
 import json
 import logging
+import httpx  # Для асинхронных запросов
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-import os
 
 # Логирование
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Путь к папке с изображениями
-IMAGE_PATH = "data/images/"  # Путь к папке с изображениями, возможно нужно изменить путь, если изображения в другой папке
+# URL для JSON файлов
+URLS = {
+    "menu": "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/menu.json",
+    "category_1": "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/category_1.json",
+    "category_2": "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/category_2.json",
+    "category_3": "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/category_3.json",
+    "category_4": "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/category_4.json"
+}
 
-# Загружаем товары для категории
-def load_category_items(file_path):
+# Функция для асинхронной загрузки данных из URL
+async def load_json_from_url(url: str):
     try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return json.load(file)
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url)
+            response.raise_for_status()  # Проверка на успешный ответ
+            return response.json()  # Возвращаем данные в формате JSON
     except Exception as e:
-        logger.error(f"Ошибка при загрузке файла {file_path}: {e}")
-        return []
+        logger.error(f"Ошибка при загрузке данных с {url}: {e}")
+        return {}
 
 async def show_menu(update: Update, context: CallbackContext):
     """Показывает кнопки с категориями."""
     query = update.callback_query
     await query.answer()
-    
+
+    # Загружаем меню
+    menu_data = await load_json_from_url(URLS["menu"])
+
+    if not menu_data:
+        await query.edit_message_text("Ошибка загрузки меню.")
+        return
+
     keyboard = [
         [InlineKeyboardButton("Café", callback_data="category_cafe")],
         [InlineKeyboardButton("Cerveza", callback_data="category_cerveza")],
@@ -38,23 +53,23 @@ async def handle_category(update: Update, context: CallbackContext):
     """Показывает товары для выбранной категории с кнопками."""
     query = update.callback_query
     await query.answer()
-    
-    # Связываем callback_data с файлами
-    category_files = {
-        "category_cafe": "data/category_1.json",
-        "category_cerveza": "data/category_2.json",
-        "category_bocadillos": "data/category_3.json",
-        "category_comida": "data/category_4.json",
+
+    # Связываем callback_data с URL
+    category_urls = {
+        "category_cafe": URLS["category_1"],
+        "category_cerveza": URLS["category_2"],
+        "category_bocadillos": URLS["category_3"],
+        "category_comida": URLS["category_4"],
     }
 
-    # Проверяем, существует ли файл для выбранной категории
-    file_path = category_files.get(query.data)
-    if not file_path:
+    # Получаем URL для выбранной категории
+    url = category_urls.get(query.data)
+    if not url:
         await query.edit_message_text("Categoría no encontrada. Inténtalo de nuevo.")
         return
 
-    # Загружаем данные из файла
-    items = load_category_items(file_path)
+    # Загружаем товары для категории
+    items = await load_json_from_url(url)
     if not items:
         await query.edit_message_text("No hay productos disponibles en esta categoría.")
         return
@@ -76,18 +91,18 @@ async def handle_product(update: Update, context: CallbackContext):
 
     # Получаем ID товара из callback_data
     product_id = query.data.split("_")[1]
-    
+
     # Загружаем все категории, чтобы найти товар по ID
-    all_categories = [
-        "data/category_1.json",
-        "data/category_2.json",
-        "data/category_3.json",
-        "data/category_4.json",
+    all_categories_urls = [
+        URLS["category_1"],
+        URLS["category_2"],
+        URLS["category_3"],
+        URLS["category_4"],
     ]
 
     product = None
-    for category_file in all_categories:
-        items = load_category_items(category_file)
+    for url in all_categories_urls:
+        items = await load_json_from_url(url)
         for item in items:
             if item["id"] == int(product_id):
                 product = item
@@ -100,21 +115,12 @@ async def handle_product(update: Update, context: CallbackContext):
         return
 
     # Отправляем фотографию и описание
-    image_path = os.path.join(IMAGE_PATH, product['image'])
-    logger.info(f"Пытаемся загрузить изображение: {image_path}")  # Логируем путь к изображению
-
+    image_url = f"https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/images/{product['image']}"
     try:
-        if os.path.exists(image_path):  # Проверка существования файла
-            with open(image_path, "rb") as photo:
-                await query.message.reply_photo(
-                    photo=photo,
-                    caption=f"⭐ {product['name']} - {product['price']}€\n\n{product['description']}"
-                )
-        else:
-            logger.error(f"Изображение не найдено: {image_path}")
-            await query.message.reply_text(
-                f"⭐ {product['name']} - {product['price']}€\n\n{product['description']}\n\n(Imagen no disponible)"
-            )
+        await query.message.reply_photo(
+            photo=image_url,
+            caption=f"⭐ {product['name']} - {product['price']}€\n\n{product['description']}"
+        )
     except Exception as e:
         logger.error(f"Ошибка при отправке изображения: {e}")
         await query.message.reply_text(
