@@ -46,6 +46,9 @@ async def show_menu(update: Update, context: CallbackContext):
         [InlineKeyboardButton("Bocadillos", callback_data="category_bocadillos")],
         [InlineKeyboardButton("Comida", callback_data="category_comida")],
     ]
+    # Добавляем кнопку "Назад" для возврата в основное меню
+    keyboard.append([InlineKeyboardButton("Volver al menú principal", callback_data="show_menu")])
+
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text("Selecciona una categoría:", reply_markup=reply_markup)
 
@@ -79,8 +82,9 @@ async def handle_category(update: Update, context: CallbackContext):
         [InlineKeyboardButton(f"⭐ {item['name']}", callback_data=f"item_{item['id']}")]
         for item in items
     ]
-    # Добавляем кнопку "Назад"
+    # Добавляем кнопку "Назад" для возврата в меню
     keyboard.append([InlineKeyboardButton("Volver a categorías", callback_data="show_menu")])
+
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text("Selecciona un producto:", reply_markup=reply_markup)
 
@@ -126,3 +130,10 @@ async def handle_product(update: Update, context: CallbackContext):
         await query.message.reply_text(
             f"⭐ {product['name']} - {product['price']}€\n\n{product['description']}\n\n(Imagen no disponible)"
         )
+
+    # Кнопка для возврата в основное меню
+    keyboard = [
+        [InlineKeyboardButton("Volver al menú principal", callback_data="show_menu")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.message.reply_text("¿Quieres volver al menú principal?", reply_markup=reply_markup)
