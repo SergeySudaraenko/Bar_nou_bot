@@ -1,12 +1,16 @@
 import json
+import httpx  # Используем httpx для асинхронных запросов
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
 async def schedule(update: Update, context: CallbackContext):
     try:
-        # Чтение данных из файла schedule.json
-        with open("data/schedule.json", "r", encoding="utf-8") as file:
-            schedule_data = json.load(file)
+        # Загрузка данных из URL
+        url = "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/schedule.json"
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url)
+            response.raise_for_status()  # Проверяем, что запрос выполнен успешно
+            schedule_data = response.json()  # Преобразуем JSON-ответ в словарь
 
         # Формирование текста с графиком
         schedule_text = "Horario de trabajo:\n"
@@ -17,12 +21,10 @@ async def schedule(update: Update, context: CallbackContext):
 
         # Добавление кнопок
         keyboard = [
-        [InlineKeyboardButton("Ver el menú", callback_data="menu")],
-        [InlineKeyboardButton("Dirección y contactos", callback_data="contacts")],
-        [InlineKeyboardButton("Reservar una mesa", callback_data="book")],
-        
-    ]
-    
+            [InlineKeyboardButton("Ver el menú", callback_data="menu")],
+            [InlineKeyboardButton("Dirección y contactos", callback_data="contacts")],
+            [InlineKeyboardButton("Reservar una mesa", callback_data="book")],
+        ]
         reply_markup = InlineKeyboardMarkup(keyboard)
 
         # Проверяем, если запрос пришел через callback_query или через сообщение
