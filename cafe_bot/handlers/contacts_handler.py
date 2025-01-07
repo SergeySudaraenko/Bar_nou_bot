@@ -1,12 +1,20 @@
 import json
+import aiohttp  # Используем aiohttp для загрузки данных по URL
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
 async def contacts(update: Update, context: CallbackContext):
     try:
-        # Чтение данных из файла contactos.json
-        with open("data/contactos.json", "r", encoding="utf-8") as file:
-            contactos_data = json.load(file)
+        # Ссылка на JSON-файл на GitHub
+        url = "https://raw.githubusercontent.com/SergeySudaraenko/Bar_nou_bot/main/cafe_bot/data/contactos.json"
+
+        # Загрузка данных из файла contactos.json через URL
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    contactos_data = await response.json()
+                else:
+                    raise Exception(f"Ошибка загрузки данных: {response.status}")
 
         # Формирование текста с контактами
         contacts_text = "Dirección y contactos:\n"
