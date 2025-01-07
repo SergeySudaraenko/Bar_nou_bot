@@ -2,15 +2,15 @@
     {
       "id": 22,
       "name": "Khinkali",
-      "price": 2,
+      "price": 1.5,
       "description": "Deliciosos dumplings georgianos.Precio por unidad",
       "image": "chinkali.png"
     },
     {
       "id": 23,
       "name": "Vareniki",
-      "price": 1.5,
-      "description": "Dumplings tradicionales rellenos de patata o requesón.Precio por unidad",
+      "price": 5,
+      "description": "Dumplings tradicionales rellenos de patata o requesón. Precio por porción (7 unidades)",
       "image": "vareniki.png"
     },
     {
