@@ -2,42 +2,42 @@
     {
       "id": 6,
       "name": "Caña pequeña",
-      "price": 1.6,
+      "price": 1.8,
       "description": "Pequeña cerveza bien fría.",
       "image": "cana_pequena.png"
     },
     {
       "id": 7,
       "name": "Quinto",
-      "price": 1.7,
+      "price": 1.8,
       "description": "Botellín pequeño de cerveza.",
       "image": "quinto.png"
     },
     {
       "id": 8,
       "name": "Caña",
-      "price": 2.1,
+      "price": 2.3,
       "description": "Vaso mediano de cerveza fresca.",
       "image": "cana.png"
     },
     {
       "id": 9,
       "name": "Mediana",
-      "price": 2.3,
+      "price": 2.5,
       "description": "Botella de tamaño mediano.",
       "image": "mediana.png"
     },
     {
       "id": 10,
       "name": "Jarra",
-      "price": 3.5,
+      "price": 3.7,
       "description": "Jarra grande para disfrutar con amigos.",
       "image": "jarra.png"
     },
     {
       "id": 11,
       "name": "Сerveza embotellada",
-      "price": 2.3,
+      "price": 2.5,
       "description": "Cerveza para todos los gustos.",
       "image": "Cerveza_diferente.png"
     }
